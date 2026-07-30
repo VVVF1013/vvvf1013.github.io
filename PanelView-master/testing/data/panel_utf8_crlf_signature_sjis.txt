@@ -1,3 +1,0 @@
-BveTs Instrument Panel 2.01:shift_jis
-
-; ShiftJIS指定なのにUTF-8のBOMなし😊
