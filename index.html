@@ -74,6 +74,7 @@
 
         const ua = navigator.userAgent;
         let currentIndex = 0;
+        let aaList = [];
 
         window.addEventListener("DOMContentLoaded", () => {
             const ua = navigator.userAgent;
@@ -97,9 +98,7 @@
         var t = 0;
         var count = 0;
 
-                var hajime = [
-            
-            AAList
+        var hajime = [ 
             ];
         var doushi = [
             'に昨日の冒険を語り聞かせた。'
@@ -119,25 +118,7 @@
             return text;
         }
 
-        function splitSprite(templateId, linesPerSprite) {
-            const template = document.getElementById(templateId);
-
-            // 文章を行単位に分割
-            const lines = template.textContent.trim().split("\n");
-
-            const sprites = [];
-
-            // 指定行数ごとに分割
-            for (let i = 0; i < lines.length; i += linesPerSprite) {
-                sprites.push(
-                    lines.slice(i, i + linesPerSprite).join("\n")
-                );
-            }
-
-            return sprites;
-        }
-
-        AAList = splitSprite("aa-template1", 112);
+        aaList = splitSprite("aa-template1", 112);
 
         function story() {
             var main = document.getElementById('main');
@@ -151,7 +132,7 @@
             
             
 
-            var valHajime = choose(AAList);
+            var valHajime = choose(aaList);
 
             if (aaList.includes(valHajime)) {
                 var fElement = document.createElement('f');
@@ -168,20 +149,35 @@
             main.appendChild(last);
         }
 
-            function init() {
-                var template = document.getElementById('aa-template1');
-                if (template) {
-                    AA1 = template.textContent;
-                }
+        function splitSprite(templateId, linesPerSprite) {
+            const template = document.getElementById(templateId);
 
-            story();
+            // 文章を行単位に分割
+            const lines = template.textContent.trim().split("\n");
 
-            setInterval(() => {
-                count++;
-                story();
-            }, 41);
+            const sprites = [];
 
+            // 指定行数ごとに分割
+            for (let i = 0; i < lines.length; i += linesPerSprite) {
+                sprites.push(
+                    lines.slice(i, i + linesPerSprite).join("\n")
+            );
+            }
+
+            return sprites;
         }
+
+            function init() {
+                aaList = splitSprite("aa-template1", 112);
+
+                story();
+
+                setInterval(() => {
+                    count++;
+                    story();
+                }, 41);
+
+            }
     </script>
     <title>2026芸祭</title>
 </head>
