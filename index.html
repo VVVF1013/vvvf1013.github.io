@@ -1,5 +1,4 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- saved from url=(0031)https://nickm.com/2/futari.html -->
 <html>
 
 <head>
@@ -145,18 +144,15 @@ function story() {
 
 async function init() {
     function splitSprite(text, linesPerSprite) {
-        // 文章を行単位に分割
         const lines = text.trim().split("\n");
         const sprites = [];
 
-        // 指定行数ごとに分割
         for (let i = 0; i < lines.length; i += linesPerSprite) {
             sprites.push(lines.slice(i, i + linesPerSprite).join("\n"));
         }
         return sprites;
     }
 
-    // aa-template1.txt を取得
     const res = await fetch("aa-template1.txt");
     const text = await res.text();
 
@@ -167,10 +163,10 @@ async function init() {
     setInterval(() => {
         count++;
         story();
-    }, 41);
+    }, 42);
 }
     </script>
-    <title>2026芸祭</title>
+    <title>AA2026</title>
 </head>
 
 <body onload="init();">
