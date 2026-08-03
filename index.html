@@ -49,7 +49,7 @@
             max-width: 400em;
             width: max-content;
             white-space: pre;
-            font-size: 6px;
+            font-size: 8px;
             line-height:100%;
             letter-spacing: 0;
             font-smooth: never;
@@ -112,74 +112,63 @@
             return Math.floor(Math.random() * (max + 1));
         }
 
-        function choose() {
-            const text = hajime[currentIndex];
-            currentIndex = (currentIndex + 1) % hajime.length;
-            return text;
+        function choose(aa) {
+    const text = aa[currentIndex];
+    currentIndex = (currentIndex + 1) % aa.length;
+    return text;
+}
+
+function story() {
+    var main = document.getElementById('main');
+    if (t <= 0) {
+        t += 1;
+    } else {
+        main.removeChild(document.getElementById('main').firstChild);
+    }
+    var last = document.createElement('div');
+    last.appendChild(document.createElement('br'));
+
+    var valHajime = choose(aaList);
+
+    if (aaList.includes(valHajime)) {
+        var fElement = document.createElement('f');
+        fElement.textContent = valHajime;
+        last.appendChild(fElement);
+        last.appendChild(document.createElement('br'));
+    } else {
+        last.appendChild(document.createTextNode(valHajime));
+        last.appendChild(document.createElement('br'));
+    }
+
+    main.appendChild(last);
+}
+
+async function init() {
+    function splitSprite(text, linesPerSprite) {
+        // 文章を行単位に分割
+        const lines = text.trim().split("\n");
+        const sprites = [];
+
+        // 指定行数ごとに分割
+        for (let i = 0; i < lines.length; i += linesPerSprite) {
+            sprites.push(lines.slice(i, i + linesPerSprite).join("\n"));
         }
+        return sprites;
+    }
 
-        function story() {
-            var main = document.getElementById('main');
-            if (t <= 0) {
-                t += 1;
-            } else {
-                main.removeChild(document.getElementById('main').firstChild);
-            }
-            var last = document.createElement('div');
-            last.appendChild(document.createElement('br'));
-            
-            
+    // aa-template1.txt を取得
+    const res = await fetch("aa-template1.txt");
+    const text = await res.text();
 
-            var valHajime;
+    aaList = splitSprite(text, 135);
 
-            if (aaList.includes(valHajime)) {
-                var fElement = document.createElement('f');
-                fElement.textContent = valHajime; 
-                last.appendChild(fElement);
-                last.appendChild(document.createElement('br'));
-            } else {
-        
-                last.appendChild(document.createTextNode(valHajime));
-                last.appendChild(document.createElement('br'));
-            }
+    story();
 
-            
-            main.appendChild(last);
-        }
-
-        
-
-            function init() {
-                function splitSprite(templateId, linesPerSprite) {
-                    const template = document.getElementById(templateId);
-
-                    // 文章を行単位に分割
-                    const lines = template.textContent.trim().split("\n");
-
-                    const sprites = [];
-
-                    // 指定行数ごとに分割
-                    for (let i = 0; i < lines.length; i += linesPerSprite) {
-                        sprites.push(
-                            lines.slice(i, i + linesPerSprite).join("\n")
-                    );
-                    }
-
-                    return sprites;
-                }
-
-                aaList = splitSprite("aa-template1", 112);
-
-                valHajime = choose(aaList);
-
-                story();
-
-                setInterval(() => {
-                    count++;
-                    story();
-                }, 41);
-
-            }
+    setInterval(() => {
+        count++;
+        story();
+    }, 41);
+}
     </script>
     <title>2026芸祭</title>
 </head>
@@ -193,8 +182,5 @@
     
         <div id="main"></div>
 
-        <script id="aa-template1" type="text/plain">
-                                                  .""";""""";;;;;;;;;;^^^^^^^^^;^^^_^_,.'_;^_^~'```                                                                              `~^":`         ` `':;_'"""!!!;.                                                                                                                                                                                                
-                                                  ."""""""""";;;;;;;;;^^^^^^^^^^^^^;:.'_";;"_'`                                                                                   ,__'           ` -_;.'"""!!",`                                                                                                                                                                                                
-                               
-</script>
+    </div>
+</body>
